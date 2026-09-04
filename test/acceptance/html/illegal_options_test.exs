@@ -2,20 +2,23 @@ defmodule Test.Acceptance.Html.IllegalOptionsTest do
   use ExUnit.Case
 
   import ExUnit.CaptureIO
-  import Earmark, only: [as_html: 2, as_html!: 2]
+  import Padmark, only: [as_html: 2, as_html!: 2]
 
   describe "unrecognized options" do
     test "with empty" do
       messages = [
         {:warning, 0, "Unrecognized option no_such_option: true"}
       ]
+
       assert as_html("", no_such_option: true) == {:error, "", messages}
     end
+
     test "with non empty" do
       expected_messages = [
         {:warning, 0, "Unrecognized option hello: 42"},
-        {:warning, 0, "Unrecognized option no_such_option: true"},
+        {:warning, 0, "Unrecognized option no_such_option: true"}
       ]
+
       {:error, "", messages} = as_html("hello", no_such_option: true, hello: 42)
       assert Enum.sort(messages) == Enum.sort(expected_messages)
     end
@@ -24,16 +27,18 @@ defmodule Test.Acceptance.Html.IllegalOptionsTest do
   test "with as_html!" do
     error_messages =
       capture_io(:stderr, fn ->
-        as_html!("hello", oops: Earmark) 
+        as_html!("hello", oops: Padmark)
       end)
-    assert error_messages == "<no file>:0: warning: Unrecognized option oops: Earmark\n"
-  end 
+
+    assert error_messages == "<no file>:0: warning: Unrecognized option oops: Padmark\n"
+  end
 
   test "with as_html! defining filename" do
     error_messages =
       capture_io(:stderr, fn ->
-        as_html!("hello", oops: Earmark, file: "test.md")
+        as_html!("hello", oops: Padmark, file: "test.md")
       end)
-    assert error_messages == "test.md:0: warning: Unrecognized option oops: Earmark\n"
+
+    assert error_messages == "test.md:0: warning: Unrecognized option oops: Padmark\n"
   end
 end

@@ -40,7 +40,7 @@ Specs to be rewritten:
 
 ### Creating docs
 
-This is tricky as we have a circular dependency problem between `Earmark` and `ExDoc`
+This is tricky as we have a circular dependency problem between `Padmark` and `ExDoc`
 
 However, helped by José Valim it can be done with a rather simple workaround for the doc task
 in [mix.exs](mix.exs)  

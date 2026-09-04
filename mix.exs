@@ -1,22 +1,25 @@
-defmodule Earmark.Mixfile do
+defmodule Padmark.Mixfile do
   use Mix.Project
 
   @version "1.4.49"
 
-  @url "https://github.com/pragdave/earmark"
+  @url "https://github.com/lambdapad/padmark"
 
   @deps [
+    {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
     {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+    {:doctor, "~> 0.21", only: [:dev, :test], runtime: false},
     {:earmark_ast_dsl, "~> 0.3.6", only: [:dev, :test]},
+    {:ex_check, "~> 0.16", only: [:dev, :test], runtime: false},
     {:ex_doc, "~> 0.38.2", only: [:dev]},
     {:floki, "~> 0.21", only: [:dev, :test]},
     {:traverse, "~> 1.0.1", only: [:dev, :test]}
   ]
 
   @description """
-  Earmark is a pure-Elixir Markdown converter.
+  Padmark is a pure-Elixir Markdown converter.
 
-  It is intended to be used as a library (just call Earmark.as_html),
+  It is intended to be used as a library (just call Padmark.as_html),
   but can also be used as a command-line tool (run mix escript.build
   first).
 
@@ -27,7 +30,7 @@ defmodule Earmark.Mixfile do
 
   def project do
     [
-      app: :earmark,
+      app: :padmark,
       version: @version,
       compilers: [:leex, :yecc] ++ Mix.compilers(),
       elixir: "~> 1.14",
@@ -51,7 +54,7 @@ defmodule Earmark.Mixfile do
   defp elixirc_paths(_), do: ["lib", "lib1"]
 
   defp escript_config do
-    [main_module: Earmark.Cli]
+    [main_module: Padmark.Cli]
   end
 
   defp package do
@@ -72,7 +75,7 @@ defmodule Earmark.Mixfile do
         "Apache-2.0"
       ],
       links: %{
-        "GitHub" => "https://github.com/pragdave/earmark"
+        "GitHub" => "https://github.com/lambdapad/padmark"
       }
     ]
   end

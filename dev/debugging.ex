@@ -17,12 +17,12 @@
 
 #   # def print_html(markdown) do
 #   #   markdown
-#   #   |> Earmark.as_html!
+#   #   |> Padmark.as_html!
 #   #   |> IO.puts
 #   # end
 
 #   # def parse(markdown) do
-#   #   Earmark.Parser.parse_markdown(markdown)
+#   #   Padmark.Parser.parse_markdown(markdown)
 #   #   |> remove_context()
 #   # end
 

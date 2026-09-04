@@ -3,18 +3,17 @@ defmodule Acceptance.Html.EmptyTest do
 
   test "empty" do
     markdown = ""
-    html     = ""
+    html = ""
     messages = []
 
-    assert Earmark.as_html(markdown) == {:ok, html, messages}
+    assert Padmark.as_html(markdown) == {:ok, html, messages}
   end
 
   test "almost empty" do
     markdown = "  "
-    html     = ""
+    html = ""
     messages = []
 
-    assert Earmark.as_html(markdown) == {:ok, html, messages}
+    assert Padmark.as_html(markdown) == {:ok, html, messages}
   end
-  
 end

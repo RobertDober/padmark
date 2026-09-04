@@ -1,7 +1,7 @@
-defmodule Earmark.Parser.Ast.Renderer.AstWalkerTest do
+defmodule Padmark.Parser.Ast.Renderer.AstWalkerTest do
   use ExUnit.Case, async: true
 
-  alias Earmark.Parser.Ast.Renderer.AstWalker
+  alias Padmark.Parser.Ast.Renderer.AstWalker
 
   describe "walk_ast/2" do
     test "returns an empty list for an empty list" do

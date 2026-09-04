@@ -1,23 +1,27 @@
 defmodule Support.Html1Helpers do
+  @moduledoc false
+
   def to_html1(markdown, options \\ []) do
-    {status, ast, messages} = Earmark.Parser.as_ast(markdown, options)
+    {status, ast, messages} = Padmark.Parser.as_ast(markdown, options)
 
     if System.get_env("DEBUG") do
+      # credo:disable-for-next-line Credo.Check.Warning.IoInspect
       IO.inspect({:ast, ast})
     end
 
-    {status, Earmark.Transform.transform(ast, options), messages}
+    {status, Padmark.Transform.transform(ast, options), messages}
   end
 
   def to_html2(markdown, options \\ []) do
-    {:ok, ast, []} = Earmark.Parser.as_ast(markdown, options)
+    {:ok, ast, []} = Padmark.Parser.as_ast(markdown, options)
 
     if System.get_env("DEBUG") do
+      # credo:disable-for-next-line Credo.Check.Warning.IoInspect
       IO.inspect({:ast, ast})
     end
 
     ast
-    |> Earmark.Transform.transform(options)
+    |> Padmark.Transform.transform(options)
     |> parse_trimmed()
   end
 
@@ -25,6 +29,7 @@ defmodule Support.Html1Helpers do
     result = _construct(constructions, 0, [], indent) |> IO.iodata_to_binary()
 
     if System.get_env("DEBUG") do
+      # credo:disable-for-next-line Credo.Check.Warning.IoInspect
       IO.inspect({:constructed, result})
     end
 

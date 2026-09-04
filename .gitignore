@@ -6,7 +6,7 @@ tmp/*
 .tool-versions
 .mix_tasks
 notes/*
-/earmark
+/padmark
 *.beam
 doc/
 

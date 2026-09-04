@@ -1,4 +1,6 @@
 defmodule Support.GenHtml do
+  @moduledoc false
+
   @increment 2
 
   def img(atts), do: para({:img, atts, nil})

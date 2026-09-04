@@ -76,7 +76,7 @@ defmodule Acceptance.Html.BlockIalTest do
 
     # Regression test for GHSA-52mm-h59v-f3c7: an IAL attribute value is not
     # restricted to plain text, so it must go through the same escaping as
-    # any other attribute (Earmark.Transform._make_att1/2).
+    # any other attribute (Padmark.Transform._make_att1/2).
     test "an attribute value with a tag and an ampersand is escaped" do
       markdown = "Before\n{:title=\"<b>bold</b> & more\"}"
       html = "<p title=\"&lt;b&gt;bold&lt;/b&gt; &amp; more\">\nBefore</p>\n"

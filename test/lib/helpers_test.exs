@@ -1,7 +1,7 @@
-defmodule Earmark.Parser.HelpersTest do
+defmodule Padmark.Parser.HelpersTest do
   use ExUnit.Case, async: true
 
-  alias Earmark.Parser.Helpers
+  alias Padmark.Parser.Helpers
 
   describe "expand_tabs/1" do
     test "expands a tab to the next 4-column stop" do

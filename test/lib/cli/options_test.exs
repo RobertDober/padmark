@@ -1,7 +1,7 @@
 defmodule Test.Cli.OptionsTest do
   use ExUnit.Case
 
-  import Earmark.Cli.Implementation, only: [parse_args: 1]
+  import Padmark.Cli.Implementation, only: [parse_args: 1]
 
   describe "boolean args" do
     [
@@ -58,8 +58,10 @@ defmodule Test.Cli.OptionsTest do
       end
 
       value_test_name = "value #{arg}, explicit value #{value}"
+
       test value_test_name do
-        assert parse_args(["--#{mk_arg(unquote(arg))}=#{to_string(unquote(value))}", "a_file"]) |> Map.get(unquote(arg)) ==
+        assert parse_args(["--#{mk_arg(unquote(arg))}=#{to_string(unquote(value))}", "a_file"])
+               |> Map.get(unquote(arg)) ==
                  unquote(value)
       end
     end)

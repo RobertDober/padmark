@@ -1,7 +1,7 @@
-defmodule Earmark.Parser.Enum.ExtTest do
+defmodule Padmark.Parser.Enum.ExtTest do
   use ExUnit.Case, async: true
 
-  alias Earmark.Parser.Enum.Ext
+  alias Padmark.Parser.Enum.Ext
 
   describe "reduce_with_end/3" do
     test "calls the reducer with :end and the initial accumulator for an empty list" do

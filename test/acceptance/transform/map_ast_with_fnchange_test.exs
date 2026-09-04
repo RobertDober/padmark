@@ -1,7 +1,7 @@
 defmodule Test.Acceptance.Transform.MapAstWithFnchangeTest do
   use ExUnit.Case
 
-  import Earmark.Transform
+  import Padmark.Transform
   import EarmarkAstDsl
 
   describe "change #elixir" do

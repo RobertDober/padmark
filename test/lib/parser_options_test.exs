@@ -1,7 +1,7 @@
-defmodule Earmark.Parser.OptionsTest do
+defmodule Padmark.Parser.OptionsTest do
   use ExUnit.Case, async: true
 
-  alias Earmark.Parser.Options
+  alias Padmark.Parser.Options
 
   describe "add_deprecations/2" do
     test "returns the messages unchanged when nothing is deprecated" do
@@ -11,21 +11,21 @@ defmodule Earmark.Parser.OptionsTest do
     test "reports the smartypants option and clears it" do
       assert Options.add_deprecations(%Options{smartypants: true}, []) == [
                {:deprecated, 0,
-                "The smartypants option has no effect anymore and will be removed in Earmark.Parser 1.5"}
+                "The smartypants option has no effect anymore and will be removed in Padmark.Parser 1.5"}
              ]
     end
 
     test "reports the pedantic option and clears it" do
       assert Options.add_deprecations(%Options{pedantic: true}, []) == [
                {:deprecated, 0,
-                "The pedantic option has no effect anymore and will be removed in Earmark.Parser 1.5"}
+                "The pedantic option has no effect anymore and will be removed in Padmark.Parser 1.5"}
              ]
     end
 
     test "reports the timeout option and clears it" do
       assert Options.add_deprecations(%Options{timeout: 5000}, []) == [
                {:deprecated, 0,
-                "The timeout option has no effect anymore and will be removed in Earmark.Parser 1.5"}
+                "The timeout option has no effect anymore and will be removed in Padmark.Parser 1.5"}
              ]
     end
 
