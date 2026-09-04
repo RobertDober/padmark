@@ -7,12 +7,8 @@ defmodule Earmark.Mixfile do
 
   @deps [
     {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
-    {:benchfella, "~> 0.3.0", only: [:dev]},
     {:earmark_ast_dsl, "~> 0.3.6", only: [:dev, :test]},
-    {:excoveralls, "~> 0.16.0", only: [:test]},
     {:ex_doc, "~> 0.38.2", only: [:dev]},
-    # {:extractly, "~> 0.5.0", git: "https://github.com/RobertDober/extractly.git", tag: "v0.5.0-pre1", only: [:dev]},
-    {:extractly, "~> 0.5.3", only: [:dev]},
     {:floki, "~> 0.21", only: [:dev, :test]},
     {:traverse, "~> 1.0.1", only: [:dev, :test]}
   ]
@@ -40,13 +36,6 @@ defmodule Earmark.Mixfile do
       deps: @deps,
       description: @description,
       package: package(),
-      preferred_cli_env: [
-        coveralls: :test,
-        "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test
-      ],
-      test_coverage: [tool: ExCoveralls],
       docs: docs()
     ]
   end
@@ -57,14 +46,8 @@ defmodule Earmark.Mixfile do
     ]
   end
 
-  def cli do
-    [preferred_envs:
-      [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
-    ]
-  end
-
   defp elixirc_paths(:test), do: ["lib", "test/support", "dev"]
-  defp elixirc_paths(:dev), do: ["lib", "lib1", "bench", "dev"]
+  defp elixirc_paths(:dev), do: ["lib", "lib1", "dev"]
   defp elixirc_paths(_), do: ["lib", "lib1"]
 
   defp escript_config do
