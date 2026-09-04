@@ -113,13 +113,13 @@ defmodule Earmark.Parser.Context do
     rule_updates =
       if options.gfm do
         rules = [
-          text: ~r{^[\s\S]+?(?=~~|[\\<!\[_*`#{subsup}]|https?://| \{2,\}\n|$)}
+          text: ~r{^[\s\S]+?(?=~~|[\\<!\[_*`#{subsup}]|(?:https?://|www\.)| \{2,\}\n|$)}
         ]
 
         if options.breaks do
           break_updates = [
             br: ~r{^ *\n(?!\s*$)},
-            text: ~r{^[\s\S]+?(?=~~|[\\<!\[_*`#{subsup}]|https?://| *\n|$)}
+            text: ~r{^[\s\S]+?(?=~~|[\\<!\[_*`#{subsup}]|(?:https?://|www\.)| *\n|$)}
           ]
 
           Keyword.merge(rules, break_updates)
