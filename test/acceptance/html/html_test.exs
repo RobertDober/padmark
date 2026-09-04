@@ -27,6 +27,42 @@ defmodule Acceptance.Html.HtmlBlocksTest do
 
       assert as_html(markdown) == {:ok, html, messages}
     end
+
+    test "input, meta and link are void too" do
+      markdown = "<input disabled>\n\nafter"
+      html = "<input disabled=\"disabled\">\n<p>\nafter</p>\n"
+      messages = []
+
+      assert as_html(markdown) == {:ok, html, messages}
+    end
+  end
+
+  describe "HTML tag attribute parsing" do
+    test "a single quoted attribute value" do
+      markdown = "<div class='lead'>text</div>"
+      html = "<div class=\"lead\">\n  text</div>\n"
+      messages = []
+
+      assert as_html(markdown) == {:ok, html, messages}
+    end
+
+    test "an unquoted attribute value" do
+      markdown = "<div class=lead>text</div>"
+      html = "<div class=\"lead\">\n  text</div>\n"
+      messages = []
+
+      assert as_html(markdown) == {:ok, html, messages}
+    end
+  end
+
+  describe "multi-line HTML blocks" do
+    test "text after the closing tag on its own line is kept, not swallowed" do
+      markdown = "<div>\n  content\n</div> trailing text"
+      html = "<div>\n    content</div>\ntrailing text"
+      messages = []
+
+      assert as_html(markdown) == {:ok, html, messages}
+    end
   end
 
   describe "HTML Oneline tags" do

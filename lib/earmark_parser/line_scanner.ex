@@ -37,7 +37,7 @@ defmodule Earmark.Parser.LineScanner do
     '''x
   end
 
-  @void_tags ~w{area br hr img wbr}
+  @void_tags ~w{area base br col command embed hr img input keygen link meta param source track wbr}
 
   # Converted rgx_map to a function
   defp rgx_map(:block_quote), do: ~r/\A>\s?(.*)/
