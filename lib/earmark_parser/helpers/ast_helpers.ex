@@ -2,7 +2,6 @@ defmodule Earmark.Parser.Helpers.AstHelpers do
   @moduledoc false
 
   import Earmark.Parser.Ast.Emitter
-  import Earmark.Parser.Helpers
 
   alias Earmark.Parser.Block
 
@@ -29,12 +28,15 @@ defmodule Earmark.Parser.Helpers.AstHelpers do
 
   @doc false
   def augment_tag_with_ial(tags, ial, src)
-  def augment_tag_with_ial([{t, a, c, m}|tags], atts, _src) do
-    [{t, merge_attrs(a, atts), c, m}|tags]
+
+  def augment_tag_with_ial([{t, a, c, m} | tags], atts, _src) do
+    [{t, merge_attrs(a, atts), c, m} | tags]
   end
+
   def augment_tag_with_ial([], _atts, _src) do
     []
   end
+
   def augment_tag_with_ial([any], _atts, src) do
     [any <> src]
   end
@@ -72,7 +74,10 @@ defmodule Earmark.Parser.Helpers.AstHelpers do
   def render_image(text, href, title) do
     regex = ~r{ \\ (?! \\ ) }x
 
-    alt = text |> escape() |> String.replace(regex, "")
+    # alt stays raw here, not HTML-escaped. Earmark.Transform escapes every
+    # attribute once at render time, so escaping it here too used to double
+    # escape it (GHSA-52mm-h59v-f3c7).
+    alt = text |> String.replace(regex, "")
 
     if title do
       emit("img", [], src: href, alt: alt, title: title)

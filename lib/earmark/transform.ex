@@ -483,8 +483,12 @@ defmodule Earmark.Transform do
 
   defp _make_att1(name_value_pair, tag)
 
+  # Attribute values used to be interpolated verbatim, letting a title or
+  # href with a quote or an angle bracket break out of the attribute
+  # (GHSA-52mm-h59v-f3c7). This is the only place a tag attribute gets
+  # serialized, so escaping happens here.
   defp _make_att1({name, value}, _) do
-    [" ", name, "=\"", value, "\""]
+    [" ", name, "=\"", escape(value, %{escape: true}), "\""]
   end
 
   defp make_indent(options, level)

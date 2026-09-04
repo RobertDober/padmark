@@ -64,11 +64,14 @@ defmodule Earmark.Parser.LineScanner do
   defp rgx_map(:table_line), do: ~r/^ \| (?: [^|]+ \|)+ \s* $ /x
   defp rgx_map(:table_line_gfm), do: ~r/\A (\s*) .* \| /x
   defp rgx_map(:table_line_prefix_space), do: ~r/\A (\s*) .* \s \| \s /x
-  defp rgx_map(:void_tag), do: ~r'''
+
+  defp rgx_map(:void_tag),
+    do: ~r'''
       ^<( #{Enum.join(@void_tags, "|")} )
         .*?
         >
     '''x
+
   defp rgx_map(:wiki_link), do: ~r/\[\[ .*? \]\]/x
 
   @doc false
@@ -148,7 +151,10 @@ defmodule Earmark.Parser.LineScanner do
 
         %Line.Fence{
           delimiter: fence,
-          language: _attribute_escape(language),
+          # Kept raw here, not HTML-escaped. Earmark.Transform escapes every
+          # attribute once at render time, so escaping it here too used to
+          # double escape it (GHSA-52mm-h59v-f3c7).
+          language: language,
           indent: byte_size(leading),
           line: line
         }
@@ -253,12 +259,6 @@ defmodule Earmark.Parser.LineScanner do
         _create_text(line, content, indent)
     end
   end
-
-  defp _attribute_escape(string),
-    do:
-      string
-      |> String.replace("&", "&amp;")
-      |> String.replace("<", "&lt;")
 
   defp _create_list_item(match, indent, line)
 
