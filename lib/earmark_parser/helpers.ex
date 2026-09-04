@@ -1,5 +1,4 @@
 defmodule Earmark.Parser.Helpers do
-
   @moduledoc false
   @doc """
   Expand tabs to multiples of 4 columns
@@ -24,8 +23,11 @@ defmodule Earmark.Parser.Helpers do
   """
   def extract_ial(line) do
     regex = ~r< (?<!^)(?'ial'{: \s* [^}]+ \s* }) \s* \z >x
+
     case Regex.split(regex, line, include_captures: true, parts: 2, on: [:ial]) do
-      [_] -> {nil, line}
+      [_] ->
+        {nil, line}
+
       [line_, "{:" <> ial, _] ->
         ial_ =
           ial
@@ -48,14 +50,16 @@ defmodule Earmark.Parser.Helpers do
   def remove_line_ending(line, nil) do
     _trim_line({line, nil})
   end
+
   def remove_line_ending(line, annotation) do
     case Regex.run(annotation, line) do
       nil -> _trim_line({line, nil})
-      match -> match |> tl() |> List.to_tuple |> _trim_line()
+      match -> match |> tl() |> List.to_tuple() |> _trim_line()
     end
   end
 
-  defp _trim_line({line, annot}), do: {line |> String.trim_trailing("\n") |> String.trim_trailing("\r"), annot}
+  defp _trim_line({line, annot}),
+    do: {line |> String.trim_trailing("\n") |> String.trim_trailing("\r"), annot}
 
   defp pad(1), do: " "
   defp pad(2), do: "  "
@@ -65,30 +69,8 @@ defmodule Earmark.Parser.Helpers do
   @doc """
   `Regex.replace` with the arguments in the correct order
   """
-
   def replace(text, regex, replacement, options \\ []) do
     Regex.replace(regex, text, replacement, options)
-  end
-
-  @doc """
-  Replace <, >, and quotes with the corresponding entities. If
-  `encode` is true, convert ampersands, too, otherwise only
-   convert non-entity ampersands.
-  """
-
-  def escape(html) do
-    regex = ~r{&(?!#?\w+;)}
-
-    _escape(Regex.replace(regex, html, "&amp;"))
-  end
-
-
-  defp _escape(html) do
-    html
-    |> String.replace("<", "&lt;")
-    |> String.replace(">", "&gt;")
-    |> String.replace("\"", "&quot;")
-    |> String.replace("'", "&#39;")
   end
 end
 
