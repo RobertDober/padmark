@@ -46,7 +46,9 @@ defmodule Padmark.Parser.OptionsTest do
     end
 
     test "compiles a string annotations option into a regex" do
-      assert Options.normalize(%Options{annotations: "%%"}).annotations == ~r{\A(.*)(%%.*)}
+      # compared by source: regexes compiled apart are not `==` on OTP 28 and later
+      assert Regex.source(Options.normalize(%Options{annotations: "%%"}).annotations) ==
+               Regex.source(~r{\A(.*)(%%.*)})
     end
 
     test "escapes regex-special characters in the annotations marker" do

@@ -1,19 +1,19 @@
 defmodule Padmark.Mixfile do
   use Mix.Project
 
-  @version "1.4.49"
+  @version "1.4.50"
 
   @url "https://github.com/lambdapad/padmark"
 
   @deps [
     {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-    {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
     {:doctor, "~> 0.21", only: [:dev, :test], runtime: false},
     {:earmark_ast_dsl, "~> 0.3.6", only: [:dev, :test]},
     {:ex_check, "~> 0.16", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.38.2", only: [:dev]},
+    {:ex_doc, "~> 0.38", only: [:dev]},
     {:floki, "~> 0.21", only: [:dev, :test]},
-    {:traverse, "~> 1.0.1", only: [:dev, :test]}
+    {:traverse, "~> 1.0.1", only: [:dev, :test]},
+    {:prisma, "~> 0.2", only: [:dev, :test], runtime: false}
   ]
 
   @description """
@@ -69,7 +69,8 @@ defmodule Padmark.Mixfile do
       ],
       maintainers: [
         "Robert Dober <robert.dober@gmail.com>",
-        "Dave Thomas <dave@pragdave.me>"
+        "Dave Thomas <dave@pragdave.me>",
+        "Manuel Rubio <manuel@altenwald.com>"
       ],
       licenses: [
         "Apache-2.0"

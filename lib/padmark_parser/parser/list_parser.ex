@@ -47,7 +47,7 @@ defmodule Padmark.Parser.Parser.ListParser do
   end
 
   defp _parse_list_items_spaced_np([%Line.Ruler{} | _] = lines, items, list_info) do
-    _finish_list_items(lines, items, false, list_info)
+    _finish_list_items(lines, items, list_info)
   end
 
   defp _parse_list_items_spaced_np(
@@ -57,9 +57,9 @@ defmodule Padmark.Parser.Parser.ListParser do
        )
        when ii < w do
     if _starts_list?(item, list_items) do
-      _finish_list_items(input, list_items, false, list_info)
+      _finish_list_items(input, list_items, list_info)
     else
-      {items1, options1} = _finish_list_item(list_items, false, _loose(list_info))
+      {items1, options1} = _finish_list_item(list_items, _loose(list_info))
       _parse_list_items_init(input, items1, options1)
     end
   end
@@ -94,7 +94,7 @@ defmodule Padmark.Parser.Parser.ListParser do
   end
 
   defp _parse_list_items_spaced_np(input, items, list_info) do
-    _finish_list_items(input, items, false, list_info)
+    _finish_list_items(input, items, list_info)
   end
 
   defp _parse_list_items_spaced_pdg(input, items, list_info)
@@ -106,7 +106,7 @@ defmodule Padmark.Parser.Parser.ListParser do
         {:warning, lnb, "Closing unclosed backquotes #{pending} at end of input"}
       )
 
-    _finish_list_items([], items, false, %{list_info | options: options1})
+    _finish_list_items([], items, %{list_info | options: options1})
   end
 
   defp _parse_list_items_spaced_pdg([line | rest], items, list_info) do
@@ -131,15 +131,15 @@ defmodule Padmark.Parser.Parser.ListParser do
   end
 
   defp _parse_list_items_start_np([], list_items, list_info) do
-    _finish_list_items([], list_items, true, list_info)
+    _finish_list_items([], list_items, list_info)
   end
 
   defp _parse_list_items_start_np([%Line.Ruler{} | _] = input, list_items, list_info) do
-    _finish_list_items(input, list_items, true, list_info)
+    _finish_list_items(input, list_items, list_info)
   end
 
   defp _parse_list_items_start_np([%Line.Heading{} | _] = input, list_items, list_info) do
-    _finish_list_items(input, list_items, true, list_info)
+    _finish_list_items(input, list_items, list_info)
   end
 
   defp _parse_list_items_start_np(
@@ -149,9 +149,9 @@ defmodule Padmark.Parser.Parser.ListParser do
        )
        when ii < w do
     if _starts_list?(item, list_items) do
-      _finish_list_items(input, list_items, true, list_info)
+      _finish_list_items(input, list_items, list_info)
     else
-      {items1, options1} = _finish_list_item(list_items, true, list_info)
+      {items1, options1} = _finish_list_item(list_items, list_info)
       _parse_list_items_init(input, items1, options1)
     end
   end
@@ -165,7 +165,7 @@ defmodule Padmark.Parser.Parser.ListParser do
   defp _parse_list_items_start_pdg(input, items, list_info)
 
   defp _parse_list_items_start_pdg([], items, list_info) do
-    _finish_list_items([], items, true, list_info)
+    _finish_list_items([], items, list_info)
   end
 
   defp _parse_list_items_start_pdg([%{line: str_line} = line | rest], items, list_info) do
@@ -192,7 +192,7 @@ defmodule Padmark.Parser.Parser.ListParser do
     end
   end
 
-  defp _finish_list_item([%Block.ListItem{} = item | items], _at_start?, list_info) do
+  defp _finish_list_item([%Block.ListItem{} = item | items], list_info) do
     {blocks, _, _, options1} =
       list_info.lines
       |> Enum.reverse()
@@ -202,8 +202,8 @@ defmodule Padmark.Parser.Parser.ListParser do
     {[%{item | blocks: blocks, loose?: loose1?} | items], options1}
   end
 
-  defp _finish_list_items(input, items, at_start?, list_info) do
-    {items1, options1} = _finish_list_item(items, at_start?, list_info)
+  defp _finish_list_items(input, items, list_info) do
+    {items1, options1} = _finish_list_item(items, list_info)
     {items1, input, options1}
   end
 

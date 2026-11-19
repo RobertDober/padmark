@@ -153,7 +153,7 @@ defmodule Padmark.Parser.Ast.Inline do
   def converter_for_footnote({src, lnb, context, true}) do
     case Regex.run(context.rules.footnote, src) do
       [match, id] ->
-        case footnote_link(context, match, id) do
+        case footnote_link(context, id) do
           {:ok, out} ->
             {behead(src, match), lnb, _prepend_footnote(context, out, id), true}
 
@@ -394,7 +394,7 @@ defmodule Padmark.Parser.Ast.Inline do
     end
   end
 
-  defp footnote_link(context, _match, id) do
+  defp footnote_link(context, id) do
     case Map.fetch(context.footnotes, id) do
       {:ok, _} ->
         {:ok, render_footnote_link("fn:#{id}", "fnref:#{id}", id)}

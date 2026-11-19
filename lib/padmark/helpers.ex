@@ -8,7 +8,7 @@ defmodule Padmark.Helpers do
           String.t(),
           Regex.t(),
           String.t() | (... -> String.t()),
-          Padmark.Options.options()
+          global: boolean()
         ) :: String.t()
   def replace(text, regex, replacement, options \\ []) do
     Regex.replace(regex, text, replacement, options)

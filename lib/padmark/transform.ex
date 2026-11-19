@@ -263,7 +263,7 @@ defmodule Padmark.Transform do
   @doc """
   Transforms an AST to html, also accepts the result of `map_ast_with` for convenience
   """
-  @spec transform(Padmark.ast(), Options.options()) :: String.t()
+  @spec transform(Padmark.ast() | {Padmark.ast(), term()}, Options.options()) :: String.t()
   def transform(ast, options \\ %{initial_indent: 0, indent: 2, compact_output: false})
   def transform({ast, _}, options), do: transform(ast, options)
 
@@ -272,15 +272,15 @@ defmodule Padmark.Transform do
   end
 
   def transform(ast, options) when is_map(options) do
-    options1 =
+    # `inner_html` is read from the options as they come (a `%Options{}` stays a struct for the match)
+    ast = _maybe_remove_paras(ast, options)
+
+    options =
       options
       |> Map.put_new(:indent, 2)
       |> Map.put_new(:compact_output, false)
 
-    ast
-    # |> IO.inspect
-    |> _maybe_remove_paras(options1)
-    |> to_html(options1)
+    to_html(ast, options)
   end
 
   @doc ~S"""
@@ -481,13 +481,13 @@ defmodule Padmark.Transform do
     _escape_to_iodata1(element, 0, element, [], false, true, 0)
   end
 
-  defp _make_att1(name_value_pair, tag)
+  defp _make_att1(name_value_pair)
 
   # Attribute values used to be interpolated verbatim, letting a title or
   # href with a quote or an angle bracket break out of the attribute
   # (GHSA-52mm-h59v-f3c7). This is the only place a tag attribute gets
   # serialized, so escaping happens here.
-  defp _make_att1({name, value}, _) do
+  defp _make_att1({name, value}) do
     [" ", name, "=\"", escape(value, %{escape: true}), "\""]
   end
 
@@ -620,8 +620,6 @@ defmodule Padmark.Transform do
     [acc | binary_part(original, skip, len)]
   end
 
-  defp _maybe_remove_paras(ast, options)
-
   defp _maybe_remove_paras(ast, %Options{inner_html: true}) do
     Enum.map(ast, &_remove_para/1)
   end
@@ -631,11 +629,11 @@ defmodule Padmark.Transform do
   defp _open_tag1(tag, atts)
 
   defp _open_tag1(tag, atts) when tag in @void_elements do
-    [?<, tag, Enum.map(atts, &_make_att1(&1, tag)), ">"]
+    [?<, tag, Enum.map(atts, &_make_att1/1), ">"]
   end
 
   defp _open_tag1(tag, atts) do
-    [?<, tag, Enum.map(atts, &_make_att1(&1, tag)), ?>]
+    [?<, tag, Enum.map(atts, &_make_att1/1), ?>]
   end
 
   defp _pop_to_pop(result, intermediate \\ [])
