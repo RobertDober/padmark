@@ -10,7 +10,7 @@ defmodule Padmark.Mixfile do
     {:doctor, "~> 0.21", only: [:dev, :test], runtime: false},
     {:earmark_ast_dsl, "~> 0.3.6", only: [:dev, :test]},
     {:ex_check, "~> 0.16", only: [:dev, :test], runtime: false},
-    {:ex_doc, "~> 0.38", only: [:dev]},
+    {:ex_doc, "~> 0.38", only: [:dev, :test], runtime: false},
     {:floki, "~> 0.21", only: [:dev, :test]},
     {:traverse, "~> 1.0.1", only: [:dev, :test]},
     {:prisma, "~> 0.2", only: [:dev, :test], runtime: false}

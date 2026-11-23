@@ -10,14 +10,14 @@ defmodule Acceptance.Transform.MetaTest do
           some code
     """
     test "base case w/o verbatim" do
-      {:ok, ast, _} = ast_from_md(@pre)
+      ast = ast_from_md(@pre)
       expected = "<pre><code>  some code</code></pre>\n"
 
       assert transform(ast) == expected
     end
 
     test "base case with verbatim" do
-      {:ok, [{"pre", atts, children, _}], _} = ast_from_md(@pre)
+      [{"pre", atts, children, _}] = ast_from_md(@pre)
       expected = "<pre><code>  some code</code></pre>\n"
 
       assert transform([{"pre", atts, children, %{verbatim: true}}]) == expected

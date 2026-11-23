@@ -5,7 +5,7 @@
   # The vendored parser is intentionally @moduledoc false throughout: it is
   # internal implementation, not part of the public API documented in the
   # README, so it is exempt from per-function doc/spec requirements here.
-  ignore_paths: [~r{^lib/padmark_parser/}],
+  ignore_paths: [~r{^lib/padmark_parser/}, ~r{^test/support/}],
   min_module_doc_coverage: 40,
   min_module_spec_coverage: 0,
   min_overall_doc_coverage: 50,

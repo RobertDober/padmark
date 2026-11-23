@@ -2,7 +2,7 @@ defmodule Support.AstHelpers do
   @moduledoc false
 
   def ast_from_md(md) do
-    with {:ok, ast, []} <- Padmark.as_ast(md), do: ast
+    with {:ok, ast, []} <- Padmark.Parser.as_ast(md), do: ast
   end
 
   def p(content, atts \\ [])

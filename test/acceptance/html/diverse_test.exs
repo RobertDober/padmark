@@ -1,7 +1,8 @@
 defmodule Acceptance.Html.DiverseTest do
-  use Support.AcceptanceTestCase
+  use ExUnit.Case, async: false
 
   import ExUnit.CaptureIO
+  import Support.Helpers, only: [as_html: 1]
 
   describe "etc" do
     test "entiy" do
