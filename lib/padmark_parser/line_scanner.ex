@@ -41,7 +41,7 @@ defmodule Padmark.Parser.LineScanner do
   # Converted rgx_map to a function
   defp rgx_map(:block_quote), do: ~r/\A>\s?(.*)/
   defp rgx_map(:column_rgx), do: ~r{\A[\s|:-]+\z}
-  defp rgx_map(:comment_rest), do: ~r/(<!--.*?-->)(.*)/
+  defp rgx_map(:comment_rest), do: ~r/\A\s{0,3}(<!--.*?-->)(.*)/
   defp rgx_map(:fence), do: ~r/\A(\s*)(`{3,}|~{3,})\s*([^`\s]*)\s*\z/u
   defp rgx_map(:footnote_definition), do: ~r/\A\[\^([^\s\]]+)\]:\s+(.*)/
   defp rgx_map(:heading), do: ~r/^(\#{1,6})\s+(?|(.*?)\s*#*\s*$|(.*))/u

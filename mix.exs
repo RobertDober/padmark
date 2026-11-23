@@ -1,7 +1,7 @@
 defmodule Padmark.Mixfile do
   use Mix.Project
 
-  @version "1.4.50"
+  @version "1.4.51"
 
   @url "https://github.com/lambdapad/padmark"
 
